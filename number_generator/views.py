@@ -16,47 +16,68 @@ class HomeView(TemplateView):
 
 def homeViewPOST(request):
     TEMPLATE_NAME = f"{APP_NAME}/home.html"
+    error_list = list()
 
     quantity = request.POST["quantity"]
     range_from = request.POST["range_from"]
     range_to = request.POST["range_to"]
 
-    isInputDecimal = quantity.isdecimal() and range_from.isdecimal() and range_to.isdecimal()
-    if not isInputDecimal:
-        return render(
-            request,
-            TEMPLATE_NAME,
-            {
-                "error_list": [ "Fields must be integer numbers." ],
-            },
-        )
+    isQuantityInteger = quantity.isdecimal() or quantity[1:].isdecimal()
+    isRangeFromInteger = range_from.isdecimal() or range_from[1:].isdecimal()
+    isRangeToInteger = range_to.isdecimal() or range_to[1:].isdecimal()
+    isInputInteger = isQuantityInteger and isRangeFromInteger and isRangeToInteger
+    if not isInputInteger:
+        error_list.append("Fields must be integer numbers.")
+        return render(request, TEMPLATE_NAME, { "error_list": error_list })
 
     quantity = int(request.POST["quantity"])
     range_from = int(request.POST["range_from"])
     range_to = int(request.POST["range_to"])
 
+    range_min = min(range_from, range_to)
+    range_max = max(range_from, range_to)
+
+    # checks for quantity erros
+    isQuantityBelowOne = quantity < 1
+    if isQuantityBelowOne:
+        error_list.append("Quantity must be a positive integer above zero.")
+
+    isQuantityGreaterThanOneHundred = quantity > 100
+    if isQuantityGreaterThanOneHundred:
+        error_list.append("Quantity must be equal or below 100.")
+
+    # checks for ranges errors
+    isStartingRangeBelowZero = range_min < 0
+    if isStartingRangeBelowZero:
+        error_list.append("The starting range must be a positive integer.")
+    
+    isEndingRangeAboveNinetyNine = range_max > 99
+    if isEndingRangeAboveNinetyNine:
+        error_list.append("The ending range must be equal or lower than 99.")
+
+    range_size = range_max - range_min + 1
+    isQuantityGreaterThanRangeSize = quantity > range_size
+    if isQuantityGreaterThanRangeSize:
+        error_list.append("Can't generate more numbers than exists within the specified range.")
+    
+    # return the feedback to user if there is any error
+    hasErrorMessages = len(error_list) > 0
+    if hasErrorMessages:
+        return render(request, TEMPLATE_NAME, { "error_list": error_list })
+
     try:
         with transaction.atomic():
             generation = Generation()
-            generation.range_from = range_from
-            generation.range_to = range_to
+            generation.range_from = range_min
+            generation.range_to = range_max
             generation.save()
 
             randomNumbers = generation.generateRandomNumbers(quantity)
             for number in randomNumbers:
                 number.save()
     except IntegrityError:
-        return render(
-            request,
-            TEMPLATE_NAME,
-            context={
-                "error_list": [
-                    "Something went wrong :(. Contact an \
-                    administrator and trying again later."
-                ],
-            },
-            status=500,
-        )
+        error_list.append("Something went wrong :(. Contact an administrator and trying again later.")
+        return render(request, TEMPLATE_NAME, { "error_list": error_list }, status=500)
     return redirect(
         "number_generator:generation_detail_page",
         pk=(generation.public_unique_identifier),
