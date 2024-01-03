@@ -12,8 +12,9 @@ class Generation(models.Model):
     def generateRandomNumbers(
         self,
         quantity: int,
+        rand_seed = None,
     ):
-        seed()
+        seed(rand_seed)
         numbers = list()
         generatedNumbers = set()
 
