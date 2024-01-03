@@ -3,8 +3,8 @@ from uuid import uuid4
 from random import seed, randint, choice
 
 class Generation(models.Model):
-    guid = models.UUIDField(primary_key=True)
-    public_unique_identifier = models.PositiveIntegerField(unique=True)
+    guid = models.UUIDField(unique=True, default=uuid4)
+    public_unique_identifier = models.BigAutoField(primary_key=True)
     range_from = models.PositiveSmallIntegerField()
     range_to = models.PositiveSmallIntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -38,8 +38,12 @@ class Number(models.Model):
         "PURPLE": "Purple",
     }
 
-    guid = models.UUIDField(primary_key=True)
-    generation = models.ForeignKey(Generation, on_delete=models.CASCADE)
+    guid = models.UUIDField(primary_key=True, default=uuid4)
+    generation = models.ForeignKey(
+        Generation,
+        on_delete=models.CASCADE,
+        to_field="guid"
+    )
     color = models.CharField(max_length=6, choices=COLOR_ENUM)
     number = models.PositiveSmallIntegerField()
 

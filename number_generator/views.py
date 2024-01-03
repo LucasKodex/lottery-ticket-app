@@ -59,7 +59,7 @@ def homeViewPOST(request):
         )
     return redirect(
         "number_generator:generation_detail_page",
-        # args=(generation.public_unique_identifier),
+        args=(generation.public_unique_identifier),
     )
 
 def homeViewALL(request):
