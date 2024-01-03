@@ -23,10 +23,10 @@ class Generation(models.Model):
         
         for generatedNumber in generatedNumbers:
             number = Number()
-            number.generation = self.guid
+            number.generation = self
             number.number = generatedNumber
             number.color = Number.randomColorEnum()
-            numbers.insert(number)
+            numbers.append(number)
         
         return numbers
 
