@@ -15,13 +15,15 @@ class Generation(models.Model):
         rand_seed = None,
     ):
         seed(rand_seed)
-        numbers = list()
-        generatedNumbers = set()
 
-        while len(generatedNumbers) < quantity:
-            randomInteger = randint(self.range_from, self.range_to)
-            generatedNumbers.add(randomInteger)
-        
+        generatedNumbers = list()
+        availableNumbers = [ x for x in range(self.range_from, self.range_to + 1) ]
+        for _ in range(quantity):
+            randomIndex = randint(0, len(availableNumbers) - 1)
+            drawnNumber = availableNumbers.pop(randomIndex)
+            generatedNumbers.append(drawnNumber)
+
+        numbers = list()
         for generatedNumber in generatedNumbers:
             number = Number()
             number.generation = self
