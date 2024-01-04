@@ -1,2 +1,13 @@
-<h1>Generation Detail</h1>
-<p>Hello, world!</p>
+<h1>YOUR LUCKY NUMBERS</h1>
+<p>#{{ generation.public_unique_identifier }}</p>
+
+<ul>
+    {% for number in generation.get_numbers_sorted %}
+    <li>{{ number.number }} - {{ number.color }}</li>
+    {% endfor %}
+</ul>
+
+{# placeholder onclick action #}
+<button type="button" onclick="alert('Placeholder onclick action')">{{ "Share" | upper }}</button>
+
+<button type="button" onclick="window.location.href = '{% url "number_generator:home_page" %}'">{{ "Back" | upper }}</button>
