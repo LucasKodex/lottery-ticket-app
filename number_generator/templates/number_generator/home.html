@@ -1,2 +1,22 @@
-<h1>Home</h1>
-<p>Hello, world!</p>
+<form action="{% url "number_generator:home_page" %}" method="post">
+    {% csrf_token %}
+
+    <label for="number_quantity">How many numbers do you want to generate?</label>
+    <input type="number" id="number_quantity" name="quantity" />
+    <fieldset>
+        <legend>Which is the range of numbers?</legend>
+        <input type="number" id="range_from" name="range_from" />
+        <label>to</label>
+        <input type="number" id="range_to" name="range_to" />
+    </fieldset>
+
+    {% if error_list %}
+    <ul>
+        {% for error in error_list %}
+        <li>{{ error }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    
+    <input type="submit" value="GENERATE" />
+</form>
