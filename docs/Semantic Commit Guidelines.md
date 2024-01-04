@@ -14,7 +14,7 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 
 This document uses the Augmented Backus-Naur Form (ABNF) notation of [RFC 5234](https://datatracker.ietf.org/doc/html/rfc5234). 
 
-The following core rules are included by reference as defined in [RFC 5234, Appendix B.1](https://datatracker.ietf.org/doc/html/rfc5234#appendix-B.1): CHAR (any 7-bit US-ASCII character, excluding NUL)
+The following core rules are included by reference as defined in [RFC 5234, Appendix B.1](https://datatracker.ietf.org/doc/html/rfc5234#appendix-B.1): CHAR (any 7-bit US-ASCII character, excluding NUL) and SP (white space).
 
 ## 2. Commit Rules
 
@@ -40,7 +40,7 @@ prefix =/ "test"
 
 The commit message must be formed by a \<prefix\>, a colon and then a short and descriptive text.
 
-commit-message = prefix COLON text  
+commit-message = prefix SP COLON text  
 
 Examples:
 
