@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% load static %}
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}Page Title{% endblock %}</title>
+        <link rel="icon" type="image/x-icon" href="{% static "number_generator/favicon.png" %}" />
+        <link rel="stylesheet" href="{% static "number_generator/style.css" %}" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" />
+    </head>
+    <body>
+        <header>
+            <div id="logo">
+                <a href="{% url "number_generator:home_page" %}" ><img src="{% static "number_generator/logo.png" %}" id="logo-img" /></a>
+            </div>
+                
+            <div id="links">
+                <a href="{% url "number_generator:home_page" %}"><div class="{% block home_selected %}{% endblock %}" >Home</div></a>
+                <a href="{% url "number_generator:about_page" %}"><div class="{% block about_selected %}{% endblock %}" >About</div></a>
+                <a href="{% url "number_generator:generation_listing_page" %}"><div class="{% block generations_selected %}{% endblock %}" >Other Generations</div></a>
+            </div>
+        </header>
+        
+        <main>
+            <form action="{% url "number_generator:home_page" %}" method="post">
+                {% csrf_token %}
+                <label for="number_quantity">How many numbers do you want to generate?</label>
+                <input type="number" min="1" max="99" placeholder="6" id="number_quantity" name="quantity" class="quantity" />
+                <fieldset>
+                    <legend>Which is the range of numbers?</legend>
+                    <input type="number" min="0" max="99" placeholder="0" id="range_from" name="range_from" class="range" />
+                    <label>to</label>
+                    <input type="number" min="0" max="99" placeholder="99" id="range_to" name="range_to" class="range" />
+                </fieldset>
+            
+                {% if error_list %}
+                <ul class="error-list">
+                    {% for error in error_list %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                
+                <input type="submit" value="GENERATE" class="btn btn_main" />
+            </form>
+        </main>
+        
+        <footer>
+            Author &commat; <a href="https://github.com/LucasKodex" target="_blank">Lucas Gonçalves Cordeiro</a> - 2024 
+        </footer>
+    </body>
+</html>
