@@ -3,6 +3,7 @@
 {% block title %}Home - Lottery Numberz{% endblock %}
 {% block home_selected%}selected{% endblock %}
 
+{% block content %}
 <form action="{% url "number_generator:home_page" %}" method="post">
     {% csrf_token %}
     <label for="number_quantity">How many numbers do you want to generate?</label>
@@ -24,3 +25,4 @@
     
     <input type="submit" value="GENERATE" class="btn btn_main" />
 </form>
+{% endblock %}
