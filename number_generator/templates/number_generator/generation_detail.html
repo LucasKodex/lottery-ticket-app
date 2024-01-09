@@ -1,5 +1,5 @@
 <h1>YOUR LUCKY NUMBERS</h1>
-<p>#{{ generation.public_unique_identifier }}</p>
+<p>{{ generation.get_formatted_puid }}</p>
 
 <ul>
     {% for number in generation.get_numbers_sorted %}

@@ -9,6 +9,9 @@ class Generation(models.Model):
     range_to = models.PositiveSmallIntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def get_formatted_puid(self):
+        return "#" + "%06d" % self.public_unique_identifier
+
     def generateRandomNumbers(
         self,
         quantity: int,
