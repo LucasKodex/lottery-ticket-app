@@ -9,6 +9,9 @@ class Generation(models.Model):
     range_to = models.PositiveSmallIntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def get_formatted_puid(self):
+        return "#" + "%06d" % self.public_unique_identifier
+
     def generateRandomNumbers(
         self,
         quantity: int,
@@ -32,6 +35,12 @@ class Generation(models.Model):
             numbers.append(number)
         
         return numbers
+
+    def get_numbers(self):
+        return Number.objects.all().filter(generation=self.guid)
+    
+    def get_numbers_sorted(self):
+        return self.get_numbers().order_by("number")
 
 class Number(models.Model):
     COLOR_ENUM = {
