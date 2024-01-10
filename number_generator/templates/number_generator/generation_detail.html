@@ -1,13 +1,43 @@
+{% extends "number_generator/base.html" %}
+
+{% load static %}
+{% block stylesheet %}{% static "number_generator/style_generation_detail.css" %}{% endblock %}
+{% block title %}Generation Details - Lottery Numberz{% endblock %}
+
+{% block content %}
 <h1>YOUR LUCKY NUMBERS</h1>
 <p>{{ generation.get_formatted_puid }}</p>
 
 <ul>
     {% for number in generation.get_numbers_sorted %}
-    <li>{{ number.number }} - {{ number.color }}</li>
+    <li class="color_{{ number.color | lower }}">{{ number.number }}</li>
     {% endfor %}
 </ul>
 
 {# placeholder onclick action #}
-<button type="button" onclick="alert('Placeholder onclick action')">{{ "Share" | upper }}</button>
+<button id="share" type="button" class="btn btn_main" onclick="shareButton()">{{ "Share" | upper }}</button>
 
-<button type="button" onclick="window.location.href = '{% url "number_generator:home_page" %}'">{{ "Back" | upper }}</button>
+<button type="button" class="btn btn_back" onclick="window.location.href = '{% url "number_generator:home_page" %}'">{{ "Back" | upper }}</button>
+<script>
+    let originalShareButtonContent = (() => {
+        const button = window.document.querySelector("button#share");
+        const buttonContent = button.innerHTML;
+        return buttonContent;
+    })();
+
+    async function shareButton() {
+        const location = window.location.href;
+        await navigator.clipboard.writeText(location);
+
+        const button = window.document.querySelector("button#share");
+        const TWO_SECONDS = 2000;
+        const timeout = TWO_SECONDS;
+        button.innerHTML = "Copied!"
+        setTimeout(() => {
+            button.innerHTML = originalShareButtonContent;
+        },
+        timeout);
+    }
+</script>
+
+{% endblock %}
