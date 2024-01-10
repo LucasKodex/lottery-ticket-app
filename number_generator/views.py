@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic import DetailView, FormView, ListView, RedirectView, TemplateView
 from django.db import IntegrityError, transaction
+from django.http import HttpResponseNotFound
 
 from .models import Generation
 
@@ -94,12 +95,6 @@ def homeView(request):
 class GenerationDetailView(DetailView):
     template_name = f"{APP_NAME}/generation_detail.html"
     model = Generation
-
-    def get_object(self, queryset=None):
-        pk = self.kwargs.get(self.pk_url_kwarg)
-        if queryset is None:
-            queryset = self.get_queryset()
-        return queryset.get(public_unique_identifier=pk)
 
 # class GenerationListView(ListView):
 class GenerationListView(TemplateView):

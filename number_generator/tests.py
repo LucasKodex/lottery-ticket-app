@@ -1,7 +1,94 @@
 from django.test import TestCase
 from django.urls import reverse
 
+from .models import Generation
+
 from unittest import skip
+
+class GenerationDetailsView(TestCase):
+    def new_generation(
+        self,
+        quantity = 6,
+        range_from = 0,
+        range_to = 99,
+        rand_seed = None
+        ):
+        generation = Generation()
+        generation.range_from = range_from
+        generation.range_to = range_to
+        generation.save()
+        numbers = generation.generateRandomNumbers(quantity, rand_seed)
+        for number in numbers:
+            number.save()
+        return generation
+
+    def test_get_inexistent_generation(self):
+        """
+        its impossible to get an inexistent generation
+        should return a 404 error
+        """
+        inexistent_puid = 999
+        response = self.client.get(reverse("number_generator:generation_detail_page", args=[inexistent_puid]))
+        self.assertEqual(response.status_code, 404)
+
+    def test_retrieve_formatted_puid(self):
+        """
+        page should contain the formatted puid for the generation
+        """
+        generation = self.new_generation()
+        response = self.client.get(reverse("number_generator:generation_detail_page", args=[generation.public_unique_identifier]))
+        response_generation = response.context["generation"]
+        formatted_puid = response_generation.get_formatted_puid()
+        self.assertContains(response, formatted_puid)
+
+    def test_retrieve_all_generated_numbers(self):
+        """
+        should return all the generated numbers for that generation
+        """
+        generation = self.new_generation()
+        generation_numbers = generation.get_numbers_sorted()
+
+        response = self.client.get(reverse("number_generator:generation_detail_page", args=[generation.public_unique_identifier]))
+        response_generation = response.context["generation"]
+        response_generation_numbers = response_generation.get_numbers_sorted()
+
+        self.assertEqual(len(generation_numbers), len(response_generation_numbers))
+        for i in range(len(generation_numbers)):
+            gen_number = generation_numbers[i]
+            res_number = response_generation_numbers[i]
+
+            self.assertEqual(gen_number.guid, res_number.guid)
+            self.assertEqual(gen_number.generation, res_number.generation)
+            self.assertEqual(gen_number.color, res_number.color)
+            self.assertEqual(gen_number.number, res_number.number)
+    
+    def test_incrementing_formatted_puid(self):
+        """
+        formatted public unique identifier should be incremented every generation
+        """
+        GENERATION_QUANTITY = 11
+        for i in range(GENERATION_QUANTITY):
+            generation = self.new_generation()
+            response = self.client.get(reverse("number_generator:generation_detail_page", args=[generation.public_unique_identifier]))
+            response_generation = response.context["generation"]
+            self.assertEqual(generation, response_generation)
+            got_formatted_puid = response_generation.get_formatted_puid()
+            expected_formatted_puid = f"#{i + 1:06}"
+            self.assertEqual(expected_formatted_puid, got_formatted_puid)
+    
+    def test_incrementing_puid(self):
+        """
+        public unique identifier should be incremented every generation
+        """
+        GENERATION_QUANTITY = 11
+        for i in range(GENERATION_QUANTITY):
+            generation = self.new_generation()
+            response = self.client.get(reverse("number_generator:generation_detail_page", args=[generation.public_unique_identifier]))
+            response_generation = response.context["generation"]
+            self.assertEqual(generation, response_generation)
+            got_puid = response_generation.public_unique_identifier
+            expected_puid = i + 1
+            self.assertEqual(expected_puid, got_puid)
 
 class GenerateRandomNumberViewBoundaryValueAnalysis(TestCase):
     def test_starting_range_below_zero(self):
