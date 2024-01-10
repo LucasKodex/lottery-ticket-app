@@ -1,5 +1,7 @@
 {% extends "number_generator/base.html" %}
 
+{% load static %}
+{% block stylesheet %}{% static "number_generator/style_home.css" %}{% endblock %}
 {% block title %}Home - Lottery Numberz{% endblock %}
 {% block home_selected%}selected{% endblock %}
 
