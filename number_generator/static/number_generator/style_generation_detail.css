@@ -30,6 +30,7 @@ main {
     width: 80vw;
     margin-top: 5%;
     text-align: center;
+    margin-bottom: 10%;
 }
 
 form {
@@ -123,7 +124,7 @@ ul {
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
-    margin: 100px 20%;
+    margin: 100px 25%;
     flex-wrap: wrap;
 }
 
