@@ -9,7 +9,7 @@
 {% if generation_list %}
 <h1>Other generated numbers</h1>
 <ul class="generation_list">
-    {% for generation in generation_list %}
+    {% for generation in page_obj %}
     <li class="generation_item">
         <div class="puid">{{ generation.get_formatted_puid }}</div>
         <ul class="number_list">
@@ -21,6 +21,16 @@
     </li>
     {% endfor %}
 </ul>
+
+<div id="page_number">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</div>
+<div id="page_buttons">
+    {% if page_obj.has_previous %}
+    <a id="btn_prev" href="?page={{ page_obj.previous_page_number }}"><button class="btn btn_back">Previous</button></a>
+    {% endif %}
+    {% if page_obj.has_next %}
+    <a id="btn_next" href="?page={{ page_obj.next_page_number }}"><button class="btn btn_main">Next</button></a>
+    {% endif %}
+</div>
 {% else %}
 <h1>There's no generations yet</h1>
 {% endif %}

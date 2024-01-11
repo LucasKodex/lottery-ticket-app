@@ -101,6 +101,7 @@ class GenerationDetailView(DetailView):
 class GenerationListView(ListView):
     model = Generation
     template_name = f"{APP_NAME}/generation_list.html"
+    paginate_by = 10
 
     def get_queryset(self):
         return super().get_queryset().order_by("-created_at")
