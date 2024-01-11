@@ -11,7 +11,7 @@
 <form action="{% url "number_generator:home_page" %}" method="post">
     {% csrf_token %}
     <label for="number_quantity">How many numbers do you want to generate?</label>
-    <input type="number" min="1" max="99" placeholder="6" id="number_quantity" name="quantity" class="quantity" />
+    <input type="number" min="1" max="100" placeholder="6" id="number_quantity" name="quantity" class="quantity" />
     <fieldset>
         <legend>Which is the range of numbers?</legend>
         <input type="number" min="0" max="99" placeholder="0" id="range_from" name="range_from" class="range" />
