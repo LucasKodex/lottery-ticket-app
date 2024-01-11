@@ -5,6 +5,61 @@ from .models import Generation
 
 from unittest import skip
 
+class GenerationListView(TestCase):
+    URL = reverse("number_generator:generation_listing_page")
+    
+    def new_generation(
+        self,
+        quantity = 6,
+        range_from = 0,
+        range_to = 99,
+        rand_seed = None
+        ):
+        generation = Generation()
+        generation.range_from = range_from
+        generation.range_to = range_to
+        generation.save()
+        numbers = generation.generateRandomNumbers(quantity, rand_seed)
+        for number in numbers:
+            number.save()
+        return generation
+    
+    def test_no_generations(self):
+        """
+        when there's no generation it should return
+        an informative message
+        """
+        response = self.client.get(self.URL)
+        NO_GENERATIONS_MESSAGE = "There's no generations yet"
+        self.assertContains(response, NO_GENERATIONS_MESSAGE)
+        
+    def test_no_generations(self):
+        """
+        when there generations it shouldn't return
+        the no generations message
+        """
+        self.new_generation()
+        response = self.client.get(self.URL)
+        NO_GENERATIONS_MESSAGE = "There's no generations yet"
+        self.assertNotContains(response, NO_GENERATIONS_MESSAGE)
+    
+    def test_get_all_generations(self):
+        """
+        the page should return every generation made
+        """
+        generations = list()
+        for _ in range(10):
+            generation = self.new_generation()
+            generations.append(generation)
+        
+        response = self.client.get(self.URL)
+        response_generations = response.context["generation_list"]
+        self.assertEqual(len(generations), len(response_generations))
+        for gen in response_generations:
+            self.assertTrue(gen in generations)
+        for gen in generations:
+            self.assertTrue(gen in response_generations)
+
 class GenerationDetailsView(TestCase):
     def new_generation(
         self,
