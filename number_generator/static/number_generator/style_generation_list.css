@@ -1,0 +1,185 @@
+:root {
+    --primary-dark-color: #042940;
+    --secondary-dark-color: #005C53;
+    --primary-light-color: #DBF227;
+    --secondary-light-color: #9FC131;
+    --neutral-color: #D6D58E;
+
+    --dark-grey: #333333;
+    --neutral-grey: #7e7e7e;
+    --light-grey: #CCCCCC;
+}
+
+* {
+    margin: auto;
+    padding: 0px;
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+    font-weight: bold;
+}
+
+body {
+    background-image: url('background-3840x2160.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+main {
+    font-size: 1.6em;
+    width: 80vw;
+    margin-top: 5%;
+    margin-bottom: 10%;
+}
+
+header {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 10px;
+    padding: 0px 50px;
+    padding-right: 100px;
+}
+
+header div#links {
+    display: grid;
+    column-gap: 10px;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+#logo {
+    margin: 30px 0px;
+}
+
+#logo-img {
+    width: auto;
+    max-height: 40px;
+}
+
+header a {
+    text-decoration: none;
+}
+
+header div.selected {
+    background-color: var(--neutral-color);
+    color: var(--primary-dark-color);
+    border-radius: 10em;
+    padding: 10px;
+}
+
+.btn {
+    border-style: none;
+    border-radius: 10em;
+    font-weight: bold;
+    padding: 18px 36px;
+    color: var(--primary-dark-color);
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.btn:hover {
+    cursor: pointer;
+    outline: 3px solid white;
+}
+
+.btn_main {
+    background-color: var(--primary-light-color);
+}
+
+.btn_back {
+    background-color: var(--light-grey)
+}
+
+footer {
+    font-weight: normal;
+    position: fixed;
+    width: 100%;
+    text-align: center;
+    bottom: 0px;
+    height: 2em;
+    padding-top: 1em;
+    background-color: rgba(4, 41, 64, 0.5);
+}
+
+footer a {
+    text-decoration: none;
+}
+
+/* ul {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    margin: 10px 0px;
+    flex-wrap: wrap;
+} */
+
+li {
+    list-style: none;
+}
+
+li.generation_item {
+    display: grid;
+    column-gap: 50px;
+    grid-template-columns: 8fr 2fr;
+    grid-template-rows: 1fr 3fr;
+    justify-items: start;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+li.generation_item ul.number_list {
+    grid-row-start: 2;
+    grid-row-end: 3;
+}
+
+li.generation_item button {
+    grid-row-start: 2;
+    grid-row-end: 3;
+}
+
+div.number_list {
+    opacity: 75%;
+}
+
+ul.number_list {
+    display: flex;
+    background-color: var(--neutral-color);
+    border-radius: 10em;
+    padding: 0px 15px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+ul.number_list li {
+    background-image: url('bingo_ball-100x100.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    color: black;
+    width: 70px;
+    height: 70px;
+    margin: 10px;
+    text-align: center;
+    line-height: 70px;
+}
+
+.puid {
+    display: block;
+    margin-left: 25px;
+}
+
+ul li.color_red {
+    /* do nothing. original image is a pinkish red */
+    filter: hue-rotate(0deg);    
+}
+
+ul li.color_blue {
+    filter: hue-rotate(250deg);  
+}
+
+ul li.color_green {
+    filter: hue-rotate(170deg);  
+}
+
+ul li.color_purple {
+    filter: hue-rotate(315deg);  
+}
