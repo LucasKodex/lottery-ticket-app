@@ -60,7 +60,7 @@ def homeViewPOST(request):
     range_size = range_max - range_min + 1
     isQuantityGreaterThanRangeSize = quantity > range_size
     if isQuantityGreaterThanRangeSize:
-        error_list.append("Can't generate more numbers than exists within the specified range.")
+        error_list.append("Can not generate more numbers than exists within the specified range.")
     
     # return the feedback to user if there is any error
     hasErrorMessages = len(error_list) > 0

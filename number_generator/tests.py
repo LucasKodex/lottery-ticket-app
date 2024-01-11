@@ -353,7 +353,6 @@ class GenerateRandomNumberViewBoundaryValueAnalysis(TestCase):
             "Should redirect to generation detail page with id 1",
         )
 
-    @skip("single quotes response is messing up with the assertContains")
     def test_generate_all_numbers_within_range_plus_one(self):
         """
         quantity equal the quantity of numbers within the range plus one shouldn't be possible.
@@ -372,12 +371,9 @@ class GenerateRandomNumberViewBoundaryValueAnalysis(TestCase):
             "Response Status Code should be 200 OK."
             + " (The operation wasn't successful but the page is rendered)"
         )
-        ERROR_MESSAGE = "Can't generate more numbers than exists within the specified range."
+        ERROR_MESSAGE = "Can not generate more numbers than exists within the specified range."
         error_list = list(response.context["error_list"])
         self.assertTrue(ERROR_MESSAGE in error_list)
-        # assertContains can't find correctly the ERROR_MESSAGE
-        # something is happen and the single quote is the reason
-        # maybe it should be HTML escaped
         self.assertContains(response, ERROR_MESSAGE)
 
 class GenerateRandomNumberView(TestCase):
