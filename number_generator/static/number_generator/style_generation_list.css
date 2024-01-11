@@ -76,6 +76,10 @@ header div.selected {
     margin-right: 20px;
 }
 
+.btn:disabled {
+    opacity: 20%;
+}
+
 .btn:hover {
     cursor: pointer;
     outline: 3px solid white;
@@ -182,4 +186,25 @@ ul li.color_green {
 
 ul li.color_purple {
     filter: hue-rotate(315deg);  
+}
+
+#page_number {
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+#page_buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 2fr);
+}
+
+#btn_prev {
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+
+#btn_next {
+    grid-column-start: 2;
+    grid-column-end: 3;
 }

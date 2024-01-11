@@ -22,6 +22,9 @@ def new_generation(
 
 class GenerationListView(TestCase):
     URL = reverse("number_generator:generation_listing_page")
+
+    def get_url_at_page(self, page=1):
+        return f'{reverse("number_generator:generation_listing_page")}?page={page}'
     
     def test_no_generations(self):
         """
@@ -32,9 +35,9 @@ class GenerationListView(TestCase):
         NO_GENERATIONS_MESSAGE = "There's no generations yet"
         self.assertContains(response, NO_GENERATIONS_MESSAGE)
         
-    def test_no_generations(self):
+    def test_exactly_one_generations(self):
         """
-        when there generations it shouldn't return
+        when there's generations it shouldn't return
         the no generations message
         """
         new_generation()
@@ -42,21 +45,50 @@ class GenerationListView(TestCase):
         NO_GENERATIONS_MESSAGE = "There's no generations yet"
         self.assertNotContains(response, NO_GENERATIONS_MESSAGE)
     
-    def test_get_all_generations(self):
+    def test_get_first_page(self):
         """
-        the page should return every generation made
+        the page should return the 10 (ten) most recent
+        generations on the first page
         """
         generations = list()
-        for _ in range(10):
+        for _ in range(15):
             generation = new_generation()
             generations.append(generation)
+        PAGE_SIZE = 10
+        PAGE_NUMBER = 1
+        startIndex = -(PAGE_SIZE * (PAGE_NUMBER - 1)) - 1
+        endIndex = -(PAGE_SIZE * PAGE_NUMBER) - 1
+        most_recent_generations = generations[startIndex:endIndex:-1]
         
         response = self.client.get(self.URL)
         response_generations = response.context["generation_list"]
-        self.assertEqual(len(generations), len(response_generations))
+        self.assertEqual(len(most_recent_generations), len(response_generations))
         for gen in response_generations:
-            self.assertTrue(gen in generations)
-        for gen in generations:
+            self.assertTrue(gen in most_recent_generations)
+        for gen in most_recent_generations:
+            self.assertTrue(gen in response_generations)
+    
+    def test_get_second_page(self):
+        """
+        the page should return the 5 (five) second most recent
+        generations on the second page
+        """
+        generations = list()
+        for _ in range(15):
+            generation = new_generation()
+            generations.append(generation)
+        PAGE_SIZE = 10
+        PAGE_NUMBER = 2
+        startIndex = -(PAGE_SIZE * (PAGE_NUMBER - 1)) - 1
+        endIndex = -(PAGE_SIZE * PAGE_NUMBER) - 1
+        second_page_generations = generations[startIndex:endIndex:-1]
+
+        response = self.client.get(self.get_url_at_page(PAGE_NUMBER))
+        response_generations = response.context["generation_list"]
+        self.assertEqual(len(second_page_generations), len(response_generations))
+        for gen in response_generations:
+            self.assertTrue(gen in second_page_generations)
+        for gen in second_page_generations:
             self.assertTrue(gen in response_generations)
 
 class GenerationDetailsView(TestCase):
