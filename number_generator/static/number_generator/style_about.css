@@ -1,0 +1,143 @@
+:root {
+    --primary-dark-color: #042940;
+    --secondary-dark-color: #005C53;
+    --primary-light-color: #DBF227;
+    --secondary-light-color: #9FC131;
+    --neutral-color: #D6D58E;
+    
+    --dark-grey: #333333;
+    --neutral-grey: #7e7e7e;
+    --light-grey: #CCCCCC;
+}
+
+* {
+    margin: auto;
+    padding: 0px;
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+    font-weight: bold;
+}
+
+body {
+    background-image: url('background-3840x2160.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+header {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 10px;
+    padding: 0px 50px;
+    padding-right: 100px;
+}
+
+header div#links {
+    display: grid;
+    column-gap: 10px;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+#logo {
+    margin: 30px 0px;
+}
+
+#logo-img {
+    width: auto;
+    max-height: 40px;
+}
+
+header a {
+    text-decoration: none;
+}
+
+header div.selected {
+    background-color: var(--neutral-color);
+    color: var(--primary-dark-color);
+    border-radius: 10em;
+    padding: 10px;
+}
+
+main {
+    font-size: 1.6em;
+    width: 80vw;
+    margin-top: 5%;
+}
+
+h1 {
+    text-align: center;
+}
+
+button {
+    display: inline-flex;
+    align-items: center;
+    margin: 0px;
+}
+
+div.buttons {
+    display: flex;
+    width: 40%;
+}
+
+a {
+    text-decoration: none;
+}
+
+p {
+    text-indent: 2em;
+    font-weight: normal;
+    font-size: 0.8em;
+    margin: 50px 25%;
+    text-align: justify;
+}
+
+.img_icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+.btn {
+    border-style: none;
+    border-radius: 10em;
+    font-weight: bold;
+    padding: 18px 36px;
+    color: var(--primary-dark-color);
+}
+
+.btn:hover {
+    cursor: pointer;
+    outline: 3px solid white;
+}
+
+.btn_main {
+    background-color: var(--primary-light-color);
+}
+
+.btn_back {
+    background-color: var(--light-grey)
+}
+
+.error-list {
+    list-style-type: '\26A0\0020';
+}
+
+.error-list li {
+    color: var(--pinkish-red);
+}
+
+footer {
+    font-weight: normal;
+    position: fixed;
+    width: 100%;
+    text-align: center;
+    bottom: 0px;
+    height: 2em;
+    padding-top: 1em;
+    background-color: rgba(4, 41, 64, 0.5);
+}
+
+footer a {
+    text-decoration: none;
+}
