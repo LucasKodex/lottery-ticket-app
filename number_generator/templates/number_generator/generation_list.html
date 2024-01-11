@@ -17,7 +17,7 @@
             <li class="color_{{ number.color | lower }}">{{ number.number }}</li>
             {% endfor %}
         </ul>
-        <button class="btn btn_main">{{ "View" | upper }}</button>
+        <button onclick="window.location.href = '{% url "number_generator:generation_detail_page" generation.public_unique_identifier %}'" class="btn btn_main">{{ "View" | upper }}</button>
     </li>
     {% endfor %}
 </ul>
