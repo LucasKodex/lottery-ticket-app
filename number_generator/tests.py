@@ -61,6 +61,9 @@ class GenerationListView(TestCase):
             self.assertTrue(gen in response_generations)
 
 class GenerationDetailsView(TestCase):
+    def get_url(self, *args):
+        return reverse("number_generator:generation_detail_page", args=args)
+    
     def new_generation(
         self,
         quantity = 6,
@@ -83,7 +86,7 @@ class GenerationDetailsView(TestCase):
         should return a 404 error
         """
         inexistent_puid = 999
-        response = self.client.get(reverse("number_generator:generation_detail_page", args=[inexistent_puid]))
+        response = self.client.get(self.get_url(inexistent_puid))
         self.assertEqual(response.status_code, 404)
 
     def test_retrieve_formatted_puid(self):
@@ -91,7 +94,7 @@ class GenerationDetailsView(TestCase):
         page should contain the formatted puid for the generation
         """
         generation = self.new_generation()
-        response = self.client.get(reverse("number_generator:generation_detail_page", args=[generation.public_unique_identifier]))
+        response = self.client.get(self.get_url(generation.public_unique_identifier))
         response_generation = response.context["generation"]
         formatted_puid = response_generation.get_formatted_puid()
         self.assertContains(response, formatted_puid)
@@ -103,7 +106,7 @@ class GenerationDetailsView(TestCase):
         generation = self.new_generation()
         generation_numbers = generation.get_numbers_sorted()
 
-        response = self.client.get(reverse("number_generator:generation_detail_page", args=[generation.public_unique_identifier]))
+        response = self.client.get(self.get_url(generation.public_unique_identifier))
         response_generation = response.context["generation"]
         response_generation_numbers = response_generation.get_numbers_sorted()
 
@@ -124,7 +127,7 @@ class GenerationDetailsView(TestCase):
         GENERATION_QUANTITY = 11
         for i in range(GENERATION_QUANTITY):
             generation = self.new_generation()
-            response = self.client.get(reverse("number_generator:generation_detail_page", args=[generation.public_unique_identifier]))
+            response = self.client.get(self.get_url(generation.public_unique_identifier))
             response_generation = response.context["generation"]
             self.assertEqual(generation, response_generation)
             got_formatted_puid = response_generation.get_formatted_puid()
@@ -138,7 +141,7 @@ class GenerationDetailsView(TestCase):
         GENERATION_QUANTITY = 11
         for i in range(GENERATION_QUANTITY):
             generation = self.new_generation()
-            response = self.client.get(reverse("number_generator:generation_detail_page", args=[generation.public_unique_identifier]))
+            response = self.client.get(self.get_url(generation.public_unique_identifier))
             response_generation = response.context["generation"]
             self.assertEqual(generation, response_generation)
             got_puid = response_generation.public_unique_identifier
@@ -146,6 +149,8 @@ class GenerationDetailsView(TestCase):
             self.assertEqual(expected_puid, got_puid)
 
 class GenerateRandomNumberViewBoundaryValueAnalysis(TestCase):
+    URL = reverse("number_generator:home_page")
+
     def test_starting_range_below_zero(self):
         """
         starting range below 0 (zero) shouldn't be possible.
@@ -157,7 +162,7 @@ class GenerateRandomNumberViewBoundaryValueAnalysis(TestCase):
             "range_to": 49,
             "quantity": 6,
         }
-        response = self.client.post(reverse("number_generator:home_page"), data)
+        response = self.client.post(self.URL, data)
         self.assertEqual(
             response.status_code,
             200,
@@ -180,7 +185,7 @@ class GenerateRandomNumberViewBoundaryValueAnalysis(TestCase):
             "range_to": 49,
             "quantity": 6,
         }
-        response = self.client.post(reverse("number_generator:home_page"), data)
+        response = self.client.post(self.URL, data)
         self.assertEqual(
             response.status_code,
             302,
@@ -203,7 +208,7 @@ class GenerateRandomNumberViewBoundaryValueAnalysis(TestCase):
             "range_to": 99,
             "quantity": 6,
         }
-        response = self.client.post(reverse("number_generator:home_page"), data)
+        response = self.client.post(self.URL, data)
         self.assertEqual(
             response.status_code,
             302,
@@ -226,7 +231,7 @@ class GenerateRandomNumberViewBoundaryValueAnalysis(TestCase):
             "range_to": 100,
             "quantity": 6,
         }
-        response = self.client.post(reverse("number_generator:home_page"), data)
+        response = self.client.post(self.URL, data)
         self.assertEqual(
             response.status_code,
             200,
@@ -249,7 +254,7 @@ class GenerateRandomNumberViewBoundaryValueAnalysis(TestCase):
             "range_to": 99,
             "quantity": 0,
         }
-        response = self.client.post(reverse("number_generator:home_page"), data)
+        response = self.client.post(self.URL, data)
         self.assertEqual(
             response.status_code,
             200,
@@ -272,7 +277,7 @@ class GenerateRandomNumberViewBoundaryValueAnalysis(TestCase):
             "range_to": 99,
             "quantity": 1,
         }
-        response = self.client.post(reverse("number_generator:home_page"), data)
+        response = self.client.post(self.URL, data)
         self.assertEqual(
             response.status_code,
             302,
@@ -295,7 +300,7 @@ class GenerateRandomNumberViewBoundaryValueAnalysis(TestCase):
             "range_to": 99,
             "quantity": 100,
         }
-        response = self.client.post(reverse("number_generator:home_page"), data)
+        response = self.client.post(self.URL, data)
         self.assertEqual(
             response.status_code,
             302,
@@ -318,7 +323,7 @@ class GenerateRandomNumberViewBoundaryValueAnalysis(TestCase):
             "range_to": 99,
             "quantity": 101,
         }
-        response = self.client.post(reverse("number_generator:home_page"), data)
+        response = self.client.post(self.URL, data)
         self.assertEqual(
             response.status_code,
             200,
@@ -341,7 +346,7 @@ class GenerateRandomNumberViewBoundaryValueAnalysis(TestCase):
             "range_to": 19,
             "quantity": 20,
         }
-        response = self.client.post(reverse("number_generator:home_page"), data)
+        response = self.client.post(self.URL, data)
         self.assertEqual(
             response.status_code,
             302,
@@ -364,7 +369,7 @@ class GenerateRandomNumberViewBoundaryValueAnalysis(TestCase):
             "range_to": 19,
             "quantity": 21,
         }
-        response = self.client.post(reverse("number_generator:home_page"), data)
+        response = self.client.post(self.URL, data)
         self.assertEqual(
             response.status_code,
             200,
@@ -377,6 +382,8 @@ class GenerateRandomNumberViewBoundaryValueAnalysis(TestCase):
         self.assertContains(response, ERROR_MESSAGE)
 
 class GenerateRandomNumberView(TestCase):
+    URL = reverse("number_generator:home_page")
+    
     def test_request_multiple_generations(self):
         """
         the first generation identifier starts at number 1, the
@@ -391,7 +398,7 @@ class GenerateRandomNumberView(TestCase):
         }
         for i in range(10):
             n = i + 1
-            response = self.client.post(reverse("number_generator:home_page"), data)
+            response = self.client.post(self.URL, data)
             self.assertEqual(
                 response.status_code,
                 302,
@@ -413,7 +420,7 @@ class GenerateRandomNumberView(TestCase):
             "range_to": "ninety-nine",
             "quantity": "six",
         }
-        response = self.client.post(reverse("number_generator:home_page"), data)
+        response = self.client.post(self.URL, data)
         self.assertEqual(
             response.status_code,
             200,
@@ -436,7 +443,7 @@ class GenerateRandomNumberView(TestCase):
             "range_to": 0,
             "quantity": 6,
         }
-        response = self.client.post(reverse("number_generator:home_page"), data)
+        response = self.client.post(self.URL, data)
         self.assertEqual(
             response.status_code,
             302,
@@ -460,7 +467,7 @@ class GenerateRandomNumberView(TestCase):
             "range_to": 99,
             "quantity": 1,
         }
-        response = self.client.post(reverse("number_generator:home_page"), data)
+        response = self.client.post(self.URL, data)
         self.assertEqual(
             response.status_code,
             302,
