@@ -1,2 +1,27 @@
-<h1>Generation List</h1>
-<p>Hello, world!</p>
+{% extends "number_generator/base.html" %}
+
+{% load static %}
+{% block stylesheet %}{% static "number_generator/style_generation_list.css" %}{% endblock %}
+{% block title %}Generation List - Lottery Numberz{% endblock %}
+{% block generations_selected%}selected{% endblock %}
+
+{% block content %}
+{% if generation_list %}
+<h1>Other generated numbers</h1>
+<ul class="generation_list">
+    {% for generation in generation_list %}
+    <li class="generation_item">
+        <div class="puid">{{ generation.get_formatted_puid }}</div>
+        <ul class="number_list">
+            {% for number in generation.get_ten_numbers_sorted %}
+            <li class="color_{{ number.color | lower }}">{{ number.number }}</li>
+            {% endfor %}
+        </ul>
+        <button class="btn btn_main">{{ "View" | upper }}</button>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<h1>There's no generations yet</h1>
+{% endif %}
+{% endblock %}

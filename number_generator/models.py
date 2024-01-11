@@ -39,8 +39,14 @@ class Generation(models.Model):
     def get_numbers(self):
         return Number.objects.all().filter(generation=self.guid)
     
-    def get_numbers_sorted(self):
-        return self.get_numbers().order_by("number")
+    def get_numbers_sorted(self, max_quantity = None):
+        queryset = self.get_numbers().order_by("number")
+        if max_quantity:
+            return queryset[:max_quantity]
+        return queryset
+    
+    def get_ten_numbers_sorted(self):
+        return self.get_numbers_sorted(10)
 
 class Number(models.Model):
     COLOR_ENUM = {

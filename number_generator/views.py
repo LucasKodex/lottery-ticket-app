@@ -1,3 +1,5 @@
+from typing import Any
+from django.db.models.query import QuerySet
 from django.shortcuts import render, redirect
 from django.views.generic import DetailView, FormView, ListView, RedirectView, TemplateView
 from django.db import IntegrityError, transaction
@@ -96,9 +98,12 @@ class GenerationDetailView(DetailView):
     template_name = f"{APP_NAME}/generation_detail.html"
     model = Generation
 
-# class GenerationListView(ListView):
-class GenerationListView(TemplateView):
+class GenerationListView(ListView):
+    model = Generation
     template_name = f"{APP_NAME}/generation_list.html"
+
+    def get_queryset(self):
+        return super().get_queryset().order_by("-created_at")
 
 class AboutView(TemplateView):
     template_name = f"{APP_NAME}/about.html"
