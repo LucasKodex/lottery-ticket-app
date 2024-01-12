@@ -1,0 +1,143 @@
+:root {
+    --primary-dark-color: #042940;
+    --secondary-dark-color: #005C53;
+    --primary-light-color: #DBF227;
+    --secondary-light-color: #9FC131;
+    --neutral-color: #D6D58E;
+
+    --dark-grey: #333333;
+    --neutral-grey: #7e7e7e;
+    --light-grey: #CCCCCC;
+
+    --pinkish-red: #FF0159;
+}
+
+* {
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+    font-weight: bold;
+}
+
+body {
+    background-image: url('background-3840x2160.jpg');
+    background-repeat: no-repeat;
+    background-size: 100vw 100vh;
+    background-attachment: fixed;
+    display: flex;
+    position: relative;
+    min-height: calc(100vh + 100px);
+}
+
+/* header bar */
+
+header {
+    background-image: url('background-3840x2160.jpg');
+    background-repeat: no-repeat;
+    background-size: 100vw 100vh;
+    position: fixed;
+    display: flex;
+    width: 100%;
+    height: 100px;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: #0005 0px 0px 25px;
+}
+
+header #logo {
+    margin-left: 50px;
+}
+
+header #logo-img {
+    width: auto;
+    max-height: 40px;
+}
+
+header #links {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin-right: 30px;
+}
+
+header #links div {
+    margin: 0px 30px;
+}
+
+header #links a {
+    text-decoration: none;
+}
+
+header div.nav_btn {
+    border-radius: 100px;
+    padding: 10px;
+    transition: linear 100ms;
+}
+
+header div.nav_btn:hover {
+    box-shadow: white 0px 0px 5px;
+}
+
+header div.selected {
+    background-color: var(--neutral-color);
+    color: var(--primary-dark-color);
+}
+
+header div.selected:hover {
+    box-shadow: none;
+    background-color: color-mix(in srgb, var(--neutral-color) 70%, #000);
+    color: var(--primary-dark-color);
+}
+
+/* main content */
+
+main {
+    margin-top: 100px;
+    margin-bottom: 100px;
+    width: 100vw;
+}
+
+/* footer */
+
+footer {
+    background-image: url('background-3840x2160.jpg');
+    background-repeat: no-repeat;
+    background-size: 100vw 100vh;
+    background-position: bottom;
+    position: absolute;
+    bottom: 0px;
+    min-height: 100px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: #0005 0px 0px 25px;
+}
+
+footer a {
+    text-decoration: none;
+}
+
+/* buttons */
+
+.btn {
+    border-style: none;
+    border-radius: 100px;
+    font-weight: bold;
+    padding: 18px 36px;
+    color: var(--primary-dark-color);
+}
+
+.btn:hover {
+    cursor: pointer;
+    outline: 3px solid white;
+}
+
+.btn_main {
+    background-color: var(--primary-light-color);
+}
+
+.btn_back {
+    background-color: var(--light-grey)
+}

@@ -5,9 +5,9 @@
         {% block head %}{% endblock %}
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{% block title %}Page Title{% endblock %}</title>
+        <title>{% block title %}Page{% endblock %} - Lottery Numberz</title>
         <link rel="icon" type="image/x-icon" href="{% static "number_generator/favicon.png" %}" />
-        <link rel="stylesheet" href="{% block stylesheet %}{% endblock %}" />
+        <link rel="stylesheet" href="{% static "number_generator/style_base.css" %}" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" />
@@ -19,9 +19,9 @@
             </div>
                 
             <div id="links">
-                <a href="{% url "number_generator:home_page" %}"><div class="{% block home_selected %}{% endblock %}" >Home</div></a>
-                <a href="{% url "number_generator:about_page" %}"><div class="{% block about_selected %}{% endblock %}" >About</div></a>
-                <a href="{% url "number_generator:generation_listing_page" %}"><div class="{% block generations_selected %}{% endblock %}" >Other Generations</div></a>
+                <a href="{% url "number_generator:home_page" %}"><div class="{% block home_selected %}{% endblock %} nav_btn" >Home</div></a>
+                <a href="{% url "number_generator:about_page" %}"><div class="{% block about_selected %}{% endblock %} nav_btn" >About</div></a>
+                <a href="{% url "number_generator:generation_listing_page" %}"><div class="{% block generations_selected %}{% endblock %} nav_btn" >Other Generations</div></a>
             </div>
         </header>
         
@@ -30,7 +30,7 @@
         </main>
         
         <footer>
-            Author &commat; <a href="https://github.com/LucasKodex" target="_blank">Lucas Gonçalves Cordeiro</a> - 2024 
+            <div>Author &commat; <a href="https://github.com/LucasKodex" target="_blank">Lucas Gonçalves Cordeiro</a> - 2024</div>
         </footer>
     </body>
 </html>
