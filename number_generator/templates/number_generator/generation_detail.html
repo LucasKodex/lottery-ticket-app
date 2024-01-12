@@ -4,22 +4,34 @@
 {% block head %}
 <link rel="stylesheet" href="{% static "number_generator/style_generation_detail.css" %}" />
 {% endblock %}
-{% block title %}Generation Details - Lottery Numberz{% endblock %}
+{% block title %}Generation Details{% endblock %}
 
 {% block content %}
-<h1>YOUR LUCKY NUMBERS</h1>
-<p>{{ generation.get_formatted_puid }}</p>
+<div id="generation_detail">
+    <div id="lucky_title">
+        <h1>YOUR LUCKY NUMBERS</h1>
+        <p>{{ generation.get_formatted_puid }}</p>
+    </div>
 
-<ul>
-    {% for number in generation.get_numbers_sorted %}
-    <li class="color_{{ number.color | lower }}">{{ number.number }}</li>
-    {% endfor %}
-</ul>
-
-{# placeholder onclick action #}
-<button id="share" type="button" class="btn btn_main" onclick="shareButton()">{{ "Share" | upper }}</button>
-
-<button type="button" class="btn btn_back" onclick="window.location.href = '{% url "number_generator:home_page" %}'">{{ "Back" | upper }}</button>
+    <ul>
+        {% for number in generation.get_numbers_sorted %}
+        <li class="color_{{ number.color | lower }}">{{ number.number }}</li>
+        {% endfor %}
+    </ul>
+    
+    <div id="buttons">
+        <div>
+            <button id="share" type="button" class="btn btn_main" onclick="shareButton()">
+                {{ "Share" | upper }}
+            </button>
+        </div>
+        <div>
+            <button type="button" class="btn btn_back" onclick="window.location.href = '{% url "number_generator:home_page" %}'">
+                {{ "Back" | upper }}
+            </button>
+        </div>
+    </div>
+</div>
 <script>
     let originalShareButtonContent = (() => {
         const button = window.document.querySelector("button#share");
