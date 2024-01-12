@@ -43,6 +43,7 @@ header {
     align-items: center;
     justify-content: space-between;
     box-shadow: #0005 0px 0px 25px;
+    z-index: 1;
 }
 
 header #logo {
@@ -97,7 +98,7 @@ main {
     margin-bottom: 100px;
     width: 100vw;
     padding: 50px 0px;
-    z-index: -1;
+    z-index: 0;
 }
 
 /* footer */
@@ -115,6 +116,7 @@ footer {
     justify-content: center;
     align-items: center;
     box-shadow: #0005 0px 0px 25px;
+    z-index: 1;
 }
 
 footer a {
