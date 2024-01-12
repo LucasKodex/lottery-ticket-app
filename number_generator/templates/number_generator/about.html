@@ -4,23 +4,26 @@
 {% block head %}
 <link rel="stylesheet" href="{% static "number_generator/style_about.css" %}" />
 {% endblock %}
-{% block title %}About - Lottery Numberz{% endblock %}
+{% block title %}About{% endblock %}
 {% block about_selected%}selected{% endblock %}
 
 {% block content %}
-<h1>About</h1>
-<div id="logo_about"></div>
-<p>
-    Lottery Ticketz is a fictional trademark created for this web application project, it is part of the
-    portfolio of Lucas Gonçalves Cordeiro, a Software Engineer with focus on backend development.
-    You can find more about the developer on <a href="https://github.com/LucasKodex" target="_blank">GitHub</a>
-    and on <a href="https://www.linkedin.com/in/lucas-gon%C3%A7alves-cordeiro/" target="_blank">LinkedIn</a>.
-    This web application is a simple number generator that was made thinking in lottery draws, developed
-    with Python using Django framework.
-</p>
+<div id="content">
+    <h1>About</h1>
+    <div id="logo_about"><img src="{% static "number_generator/logo.png" %}" /></div>
 
-<div class="buttons">
-    <a href="https://github.com/LucasKodex" target="_blank"><button id="btn_github" class="btn btn_main"><img class="img_icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" />GITHUB</button></a>
-    <a href="https://www.linkedin.com/in/lucas-gon%C3%A7alves-cordeiro/" target="_blank"><button id="btn_linkedin" class="btn btn_main"><img class="img_icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-plain.svg" />LINKEDIN</button></a>
+    <p>
+        Lottery Ticketz is a fictional trademark created for this web application project, it is part of the
+        portfolio of Lucas Gonçalves Cordeiro, a Software Engineer with focus on backend development.
+        You can find more about the developer on <a href="https://github.com/LucasKodex" target="_blank">GitHub</a>
+        and on <a href="https://www.linkedin.com/in/lucas-gon%C3%A7alves-cordeiro/" target="_blank">LinkedIn</a>.
+        This web application is a simple number generator that was made thinking in lottery draws, developed
+        with Python using Django framework.
+    </p>
+
+    <div id="buttons">
+        <a href="https://github.com/LucasKodex" target="_blank"><button id="btn_github" class="btn btn_main"><img class="img_icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" />GITHUB</button></a>
+        <a href="https://www.linkedin.com/in/lucas-gon%C3%A7alves-cordeiro/" target="_blank"><button id="btn_linkedin" class="btn btn_main"><img class="img_icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-plain.svg" />LINKEDIN</button></a>
+    </div>
 </div>
 {% endblock %}
