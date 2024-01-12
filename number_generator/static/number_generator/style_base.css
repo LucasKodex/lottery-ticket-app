@@ -96,6 +96,8 @@ main {
     margin-top: 100px;
     margin-bottom: 100px;
     width: 100vw;
+    padding: 50px 0px;
+    z-index: -1;
 }
 
 /* footer */
