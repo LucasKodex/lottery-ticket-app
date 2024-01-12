@@ -41,6 +41,10 @@ form input.number {
     font-size: 0.8em;
 }
 
+form input.number::placeholder {
+    color: var(--light-grey);
+}
+
 form input.quantity {
     width: 80%;
 }
